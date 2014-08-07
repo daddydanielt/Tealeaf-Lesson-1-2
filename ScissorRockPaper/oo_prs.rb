@@ -105,7 +105,7 @@ class Game
     puts "|                                     |"
     puts "______________________________________"
 
-    add_player(Participant::ROLE_TYPE[:computer], "DaddyDanielT")
+    add_player(Participant::ROLE_TYPE[:computer], "Daniel")
 
     while true
       puts ""
