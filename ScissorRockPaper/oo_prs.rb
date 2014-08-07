@@ -112,7 +112,7 @@ class Game
       puts "Add player:"
       
       while true 
-        printf "Whar's your name ? "
+        printf "What's your name ? "
         name = gets.chomp
         if name.length > 0
           (@players.keys.include? name) ? (puts "The name, '#{name}', has alread been used. Try another one, thanks.") : break        
