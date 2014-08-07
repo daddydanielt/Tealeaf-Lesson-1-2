@@ -65,6 +65,7 @@ class Game
 
   def play
     system "clear"    
+    @groups.clear
     @groups.push(@players.map { |k,v| k }) if @groups.count == 0
     begin       
       tmp_result =[]      
