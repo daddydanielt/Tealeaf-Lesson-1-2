@@ -58,39 +58,38 @@ end
 class Game
 
   def initialize
-    @result = []
+    @groups = []
     @players = {}
     welcome
   end
 
   def play
-    system "clear"
-    # play ^_^y
-    @result.push(@players.map { |k,v| k }) if @result.count == 0
+    system "clear"    
+    @groups.push(@players.map { |k,v| k }) if @groups.count == 0
     begin       
       tmp_result =[]      
-      @result.each_with_index do |node,i|         
-        if node.count > 1
-          players_ready_to_fighting = @players.select {|name,participant| node.include? name}              
+      @groups.each_with_index do |group,i|         
+        if group.count > 1
+          players_ready_to_fighting = @players.select {|name,participant| group.include? name}              
           puts "players = #{players_ready_to_fighting.map{|name,participant| name}} is fighting"            
           fighting_result = fighting players_ready_to_fighting                          
         end    
-        (fighting_result == nil) ? tmp_result << node : fighting_result.each { |node| tmp_result << node }
+        (fighting_result == nil) ? tmp_result << group : fighting_result.each { |group| tmp_result << group }
       end             
-      @result = tmp_result unless tmp_result.count == 0
-      remain = @result.select {|node| node.count > 1}          
+      @groups = tmp_result unless tmp_result.count == 0
+      remain = @groups.select {|group| group.count > 1}          
     end until remain.count == 0 
   end
 
   def show_fighting_result    
     puts "<< show_fighting_result >>"  
-    @result.reverse.flatten.each_with_index do |name,i|
+    @groups.reverse.flatten.each_with_index do |name,i|
       if i == 0
-        printf "rank_%-2s: %-15s => %s\n",(i+1),name,"The First Prize." 
-      elsif i == @result.count - 1
-        printf "rank_%-2s: %-15s => %s\n",(i+1),name,"The Last Place."
+        printf "Rank_%-2s: %-15s => %s\n",(i+1),name,"The First Prize." 
+      elsif i == @groups.count - 1
+        printf "Rank_%-2s: %-15s => %s\n",(i+1),name,"The Last Place."
       else
-         printf "rank_%-2s: %-10s \n",(i+1),name
+         printf "Rank_%-2s: %-10s \n",(i+1),name
       end
     end
     puts "-----------------------------------------------------------------"  
