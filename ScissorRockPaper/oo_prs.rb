@@ -1,4 +1,3 @@
-require 'pry'
 
 class Hand  
   include Comparable
@@ -22,7 +21,6 @@ class Hand
     @@compare_result[key] 
   end
 end 
-
 
 class Participant  
   # constant variable reference frozen hash
@@ -146,7 +144,8 @@ class Game
     participant_list = players.values
     # Player choice one from 'p','r','s'
     participant_list.each { |p| p.choice }
-    hand_choice_name_lists= participant_list.map{ |player| [player.hand.choice,player.name] }.group_by { |e| e[0] }.map{ |k,v| [k, v.map { |i| i[1]}.join(",")] }.to_h
+    #hand_choice_name_lists= participant_list.map{ |player| [player.hand.choice,player.name] }.group_by { |e| e[0] }.map{ |k,v| [k, v.map { |i| i[1]}.join(",")] }.to_h
+    hand_choice_name_lists = Hash[participant_list.map{ |player| [player.hand.choice,player.name] }.group_by { |e| e[0] }.map{ |k,v| [k, v.map { |i| i[1]}.join(",")] }]
     participant_list.sort!{ |x,y| x.hand <=> y.hand }  
     if [1,3].include? hand_choice_name_lists.keys.count
       # draw game, back to choice again
