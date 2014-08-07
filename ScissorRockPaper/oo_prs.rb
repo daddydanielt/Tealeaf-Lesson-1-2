@@ -1,7 +1,7 @@
 require 'pry'
 
 class Hand  
-
+  include Comparable
   @@compare_result = { "PP" => 0, "PR" => 1, "PS" => -1,
                        "RP" => -1, "RR" => 0, "RS" => 1,
                        "SP" => 1, "SR" => -1, "SS" => 0 }.freeze
