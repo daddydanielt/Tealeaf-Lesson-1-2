@@ -34,8 +34,7 @@ class Marker
   end
 end
 
-class Player 
-    
+class Player     
   ROLE = {computer:"computer", human:"human"}.freeze
   attr_reader :name,:role,:icon,:picked_squares
 
@@ -67,8 +66,7 @@ class Player
   end
 end
 
-class Board 
-  
+class Board   
   def initialize(board_size)
     @board_size = board_size
     @winning_lines =[[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [3,5,7], [1,5,9]]    
