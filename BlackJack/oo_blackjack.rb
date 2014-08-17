@@ -284,6 +284,7 @@ class Game
   private
   def create_participants   
     @delear = Delear.new("Daniel")    
+    puts "Required: ruby version #{RUBY_VERSION}".red
     puts "Hi, My name is Daniel, I am a delear, nice to meet you !"
     while true
       printf "What's your name? "  
