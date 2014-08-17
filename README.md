@@ -2,7 +2,7 @@
 
 * OO Scissor Rock Paper game
 * OO TicTcTo game
-* 
+* OO Blackjack game 
 
 
 
