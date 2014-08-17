@@ -288,12 +288,16 @@ class Game
     while true
       printf "What's your name? "  
       name = gets.chomp    
-      if !name.empty?
-        system "clear"
+      if !name.empty?        
         @gamblers << Gambler.new(name)
-        break
+        printf "Add another gambler? (y/n)"  
+        add_another_gambler = gets.chomp.upcase
+        if add_another_gambler != "Y"              
+          system "clear"
+          break
+        end
       end
-    end
+    end    
   end
 
   def display_game_result
@@ -301,12 +305,11 @@ class Game
     puts "--------------------"
     puts "[Game Result]".blue
     puts "--------------------"    
-    puts ""
     @gamblers.each do |p|             
+        #puts "===================="
         e = p.gamble_history.last
         i = p.gamble_history.count-1                        
-        printf "|-> %s %s, cards=%s\n|->%s %s, cards=%s \n", p.name, (e[:vs_result].values.join).brown, e[:cards].brown, @delear.name, @delear.gamble_history[i][:vs_result][p.name].brown,@delear.gamble_history[i][:cards].brown                                       
-        puts ""
+        printf "Gambler => %s %s, cards=%s\nV.S\nDelear  => %s %s, cards=%s \n\n", p.name.brown, (e[:vs_result].values.join).brown, e[:cards].brown, @delear.name.brown, @delear.gamble_history[i][:vs_result][p.name].brown,@delear.gamble_history[i][:cards].brown                                                
     end 
   end
 
@@ -317,7 +320,9 @@ class Game
     puts "--------------------"
     puts ""
     @gamblers.each do |p|       
-      puts "#{'Gamblers'.reverse_color}::#{p.name} #{'VS'.red} #{'Delear'.reverse_color}::#{@delear.name}"
+      #puts "Gambler:'#{p.name}' #{'VS'.red} Delear:'#{@delear.name}'"
+      puts "Gambler: #{p.name.brown} "
+      puts "Delear : #{@delear.name.brown}"
       p.gamble_history.each_with_index do |e,i|
         printf "Round_#{i+1} |-> %s, %s vs %s \n", (e[:vs_result].values.join).brown, e[:cards].brown, @delear.gamble_history[i][:cards].brown
         printf ""
