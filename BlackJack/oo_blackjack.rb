@@ -267,8 +267,8 @@ class Game
   
   def initialize
     @name = "Blackjack Game"  
-    @participant
-    @delear 
+    @participant = nil
+    @delear = nil
     @gamblers =[]
   end
   
