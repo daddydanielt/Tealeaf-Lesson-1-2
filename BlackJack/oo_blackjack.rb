@@ -14,10 +14,10 @@ class Participant
 
   def initialize(name)
     @name = name        
-    @cards = [] # [Card,Card,...]  
-    @vs_result = {} # {competitor_name:nil} # { competitor_name: self win/lose }
+    @cards = [] 
+    @vs_result = {} # {competitor_name:nil} # { competitor_name: result win/lose }
     @gamble_history = [] # [ { cards:cards, vs_result:vs_result } ] 
-                         # @gamble_history = [] #[ { cards:@cards.join(","), vs_result:@vs_result } ]
+                         
   end
 
   def set_vs_result (competitor_name:nil,result:nil)
@@ -152,8 +152,7 @@ class Delear < Participant
 
   def set_game_result(gamblers) 
     gamblers.each do |p|
-      r = self <=> p
-      #puts " <=> #{r}"
+      r = self <=> p      
       if r == 1 
         #delear win        
         p.set_vs_result(competitor_name:self.name,result:"Lose")        
@@ -320,8 +319,7 @@ class Game
     puts "[Game Report]".blue
     puts "--------------------"
     puts ""
-    @gamblers.each do |p|       
-      #puts "Gambler:'#{p.name}' #{'VS'.red} Delear:'#{@delear.name}'"
+    @gamblers.each do |p|             
       puts "Gambler: #{p.name.brown} "
       puts "Delear : #{@delear.name.brown}"
       p.gamble_history.each_with_index do |e,i|
