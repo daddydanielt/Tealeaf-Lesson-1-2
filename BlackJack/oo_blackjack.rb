@@ -1,3 +1,5 @@
+require 'pry'
+
 class String
   def red;            "\033[31m#{self}\033[0m" end
   def green;          "\033[32m#{self}\033[0m" end
@@ -9,6 +11,7 @@ end
 #--------------------------------------------------->>
 
 class Participant
+  include Comparable
   attr_accessor :name, :cards 
   attr_reader :gamble_history, :vs_result
 
@@ -54,24 +57,16 @@ class Participant
     end          
   end
 
-   def is_blackjack?
-    if cards.count == 2
-      (calculate_cards_total == 21) ? true : false
-    else
-      false
-    end
+   def is_blackjack?    
+    cards.count ==2 && calculate_cards_total ==21
   end
   
-  def is_twentyone?
-    if cards.count > 2
-      (calculate_cards_total == 21) ? true : false
-    else
-      false
-    end
+  def is_twentyone?    
+    cards.count > 2 && calculate_cards_total == 21
   end
   
-  def is_bursted?
-     (calculate_cards_total > 21) ? true : false
+  def is_bursted?     
+     calculate_cards_total > 21
   end
 
   def calculate_cards_total    
@@ -151,20 +146,16 @@ class Delear < Participant
   end
 
   def set_game_result(gamblers) 
-    gamblers.each do |p|
-      r = self <=> p      
-      if r == 1 
-        #delear win        
+    gamblers.each do |p|      
+      if self > p 
         p.set_vs_result(competitor_name:self.name,result:"Lose")        
-        self.set_vs_result(competitor_name:p.name,result:"Win")
-      elsif r ==0
-        #draw game
+        self.set_vs_result(competitor_name:p.name,result:"Win")        
+      elsif self == p
         p.set_vs_result(competitor_name:self.name,result:"Draw")
-        self.set_vs_result(competitor_name:p.name,result:"Draw")
+        self.set_vs_result(competitor_name:p.name,result:"Draw")        
       else
-        #delear lose
         p.set_vs_result(competitor_name:self.name,result:"Win")
-        self.set_vs_result(competitor_name:p.name,result:"Lose")
+        self.set_vs_result(competitor_name:p.name,result:"Lose")        
       end
       p.set_gamble_history("["+p.cards.join(",")+"]",p.vs_result)
     end  
@@ -197,14 +188,14 @@ class Gambler < Participant
         stay_or_hit = gets.chomp.upcase
         break if ['H','S'].include? stay_or_hit
       end 
-      stay_or_hit == 'H' ? true : false
+      return stay_or_hit == 'H'
     end
   end
 
   def is_exit?    
     puts ""
-    puts "(#{'E'.brown})xit or Press any key to play again. "          
-    gets.chomp.upcase == "E" ? true : false 
+    printf "#{name.brown}:: (#{'E'.brown})xit or Press any key to play again. "              
+    gets.chomp.upcase == "E" 
   end
 end
 
@@ -304,11 +295,10 @@ class Game
     puts ""
     puts "--------------------"
     puts "[Game Result]".blue
-    puts "--------------------"    
-    @gamblers.each do |p|             
-        #puts "===================="
-        e = p.gamble_history.last
-        i = p.gamble_history.count-1                        
+    puts "--------------------"        
+    @gamblers.each do |p|                     
+        e = p.gamble_history.last        
+        i = p.gamble_history.count-1                                
         printf "Gambler => %s %s, cards=%s\nV.S\nDelear  => %s %s, cards=%s \n\n", p.name.brown, (e[:vs_result].values.join).brown, e[:cards].brown, @delear.name.brown, @delear.gamble_history[i][:vs_result][p.name].brown,@delear.gamble_history[i][:cards].brown                                                
     end 
   end
